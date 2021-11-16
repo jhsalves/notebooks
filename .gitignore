@@ -1,0 +1,6 @@
+/ids-iot-2020/.ipynb_checkpoints
+/federated-learning-lab/__pycache__/*.pyc
+/federated-learning-lab/.ipynb_checkpoints
+/ids-iot-2020/__pycache__/*.pyc
+*.pyc
+.ipynb_checkpoints
