@@ -4,3 +4,5 @@
 /ids-iot-2020/__pycache__/*.pyc
 *.pyc
 .ipynb_checkpoints
+.~lock.pml-training.csv#
+*.csv
