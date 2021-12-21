@@ -9,15 +9,16 @@ def main() -> None:
     # Load and compile model for
     # 1. server-side parameter initialization
     # 2. server-side parameter evaluation
-    model, (x_train, y_train), *_  = aux.build_model_with_parameters(epochs = 1)
-    model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(), metrics= tf.keras.metrics.BinaryAccuracy())
+    model, (x_train, y_train), *_ = aux.build_model_with_parameters(epochs=1)
+    model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(),
+                  metrics=tf.keras.metrics.BinaryAccuracy())
 
     # Create strategy
     strategy = fl.server.strategy.FedAvg(
-        fraction_fit=0.8,
-        fraction_eval=0.7,
-        min_fit_clients=8,
-        min_eval_clients=8,
+        fraction_fit=1,
+        fraction_eval=1,
+        min_fit_clients=10,
+        min_eval_clients=10,
         min_available_clients=10,
         eval_fn=get_eval_fn(model, x_train, y_train),
         on_fit_config_fn=fit_config,
@@ -37,7 +38,7 @@ def get_eval_fn(model, x_train, y_train):
 
     # The `evaluate` function will be called after every round
     def evaluate(
-        weights: fl.common.Weights,
+            weights: fl.common.Weights,
     ) -> Optional[Tuple[float, Dict[str, fl.common.Scalar]]]:
         model.set_weights(weights)  # Update model with the latest parameters
         loss, accuracy = model.evaluate(x_val, y_val)

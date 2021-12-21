@@ -1,5 +1,6 @@
 import os
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import flwr as fl
 import tensorflow as tf
 import zipfile
@@ -10,7 +11,9 @@ import matplotlib.pyplot as plt
 from sklearn.impute import SimpleImputer
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
+import glob
 import os.path
+
 
 # Define Flower client
 class FlowerClient(fl.client.NumPyClient):
@@ -68,52 +71,88 @@ class FlowerClient(fl.client.NumPyClient):
         num_examples_test = len(self.x_test)
         return loss, num_examples_test, {"accuracy": accuracy}
 
-        
+
 class CentralizedTrainer:
-        def __init__(self, model, training_dataset, testing_dataset, batch_size = 32, epochs = 1, validation_split = 0.1):
-            self.model = model
-            self.x_train, self.y_train = training_dataset
-            self.x_test, self.y_test = testing_dataset
-            self.epochs = epochs
-            self.validation_split = validation_split
-            self.batch_size = batch_size
-            self.run_model()
-            
-        def run_model(self):
-            self.model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(), metrics= tf.keras.metrics.BinaryAccuracy())
-            self.history = self.model.fit(self.x_train, self.y_train, epochs=self.epochs, batch_size= self.batch_size, validation_split=self.validation_split)
+    def __init__(self, model, training_dataset, testing_dataset, batch_size=32, epochs=1, validation_split=0.1):
+        self.history = None
+        self.model = model
+        self.x_train, self.y_train = training_dataset
+        self.x_test, self.y_test = testing_dataset
+        self.epochs = epochs
+        self.validation_split = validation_split
+        self.batch_size = batch_size
+        self.run_model()
+
+    def run_model(self):
+        self.model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(),
+                           metrics=tf.keras.metrics.BinaryAccuracy())
+        self.history = self.model.fit(self.x_train, self.y_train, epochs=self.epochs, batch_size=self.batch_size,
+                                      validation_split=self.validation_split)
+
 
 fl_dataset = None
 
-def ids_iot_2020_datasets():
-    global fl_dataset
-    if fl_dataset is not None:
-        return fl_dataset
+
+def many_datasets(nrows=50000):
+    fname = "normal"
+    if not os.path.isfile("datasets/" + fname + ".csv"):
+        with zipfile.ZipFile("packet_features.zip", "r") as zip_ref:
+            zip_ref.extractall("datasets/")
+    path = r'datasets'  # use your path
+    all_files = glob.glob(path + "/*.csv")
+
+    li = []
+
+    for filename in all_files:
+        df = pd.read_csv(filename, nrows=nrows, index_col=None, header=0)
+        li.append(df)
+
+    frame = pd.concat(li, axis=0, ignore_index=True)
+    return frame
+
+
+def single_dataset():
     fname = "combinedcsvs"
     if not os.path.isfile(fname + ".csv"):
         with zipfile.ZipFile(fname + ".zip", "r") as zip_ref:
             zip_ref.extractall()
-        
+
     dataset = pd.read_csv(fname + ".csv")
-    list_protocol = dataset.drop_duplicates(subset = ['protocol'])['protocol']
-    protocol = { row: idx + 1 for idx, row in enumerate(list_protocol) }
+    return dataset
+
+
+def dataset_preprocessing(dataset):
+    list_protocol = dataset.drop_duplicates(subset=['protocol'])['protocol']
+    protocol = {row: idx + 1 for idx, row in enumerate(list_protocol)}
     dataset.protocol = [protocol[item] for item in dataset.protocol]
     features = pd.DataFrame(dataset.iloc[:, 3:30].values)
+    my_inputer = SimpleImputer(missing_values=np.nan,
+                               strategy='mean')
+    x = pd.DataFrame(my_inputer.fit_transform(features))
     scaler = preprocessing.MinMaxScaler()
-    X = scaler.fit_transform(features)
-    my_imputer = SimpleImputer(missing_values = np.nan,
-                            strategy ='mean')
-    X = pd.DataFrame(my_imputer.fit_transform(X))
+    x = scaler.fit_transform(x)
     y = dataset.iloc[:, 30].values
-    X_training, X_testing, y_training, y_testing = train_test_split(X, y, test_size = 0.05)
-    fl_dataset = (X_training, y_training), (X_testing, y_testing), X.shape[1]
+    x_training, x_testing, y_training, y_testing = train_test_split(x, y, test_size=0.05)
+    return (x_training, y_training), (x_testing, y_testing), x.shape[1]
+
+
+def ids_iot_2020_datasets(rowsperdataset=None):
+    global fl_dataset
+
+    if fl_dataset is not None:
+        return fl_dataset
+
+    dataset = many_datasets() if rowsperdataset is None else many_datasets(nrows=rowsperdataset)
+
+    fl_dataset = dataset_preprocessing(dataset)
     return fl_dataset
 
-def build_model_with_parameters(batch_size = 32, epochs = 100, validation_split = 0.1):
-    (x_train, y_train), (x_test, y_test), shape = ids_iot_2020_datasets()
-    
+
+def build_model_with_parameters(batch_size=32, epochs=100, validation_split=0.1):
+    train, test, shape = ids_iot_2020_datasets()
+
     model = tf.keras.models.Sequential()
     model.add(tf.keras.layers.Dense(units=14, activation='relu', input_shape=(shape,)))
     model.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
-    
-    return model, (x_train, y_train), (x_test, y_test), shape, batch_size, epochs, validation_split
+
+    return model, train, test, shape, batch_size, epochs, validation_split

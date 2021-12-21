@@ -14,7 +14,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 def main() -> None:
     # Parse command line argument `partition`
     parser = argparse.ArgumentParser(description="Flower")
-    parser.add_argument("--partition", type=int, choices=range(0, 10), required=True)
+    parser.add_argument("--partition", type=int, choices=range(0, 12), required=True)
     args = parser.parse_args()
 
     # Load and compile Keras model
