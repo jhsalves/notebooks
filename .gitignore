@@ -6,3 +6,8 @@
 .ipynb_checkpoints
 .~lock.pml-training.csv#
 *.csv
+*.zip
+packet_features.zip
+/advanced_tensorflow/datasets/
+*/datasets/*
+

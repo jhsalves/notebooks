@@ -1,9 +1,9 @@
 #!/bin/bash
 
-python server.py &
+python server.py --instance=$1 &
 sleep 2 # Sleep for 2s to give the server enough time to start
 
-for i in `seq 0 11`; do
+for i in `seq 0 12`; do
     echo "Starting client $i"
     python client.py --partition=${i} &
 done
