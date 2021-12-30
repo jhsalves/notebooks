@@ -5,29 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4a90fc-10bf-4fcc-9820-b263d9212a7d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/advanced_tensorflow/teste.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/advanced_tensorflow/tests.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ids-iot-2020/Centralized.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ids-iot-2020/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ids-iot-2020/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/aux.py" beforeDir="false" afterPath="$PROJECT_DIR$/aux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/combinedcsvs.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/advanced_tensorflow/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/tests.sh" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/tests.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aux.py" beforeDir="false" afterPath="$PROJECT_DIR$/aux.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ids-iot-2020/Centralized.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Centralized.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Centralized.py" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/centralized.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ids-iot-2020/Client2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Client2.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ids-iot-2020/Client3.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Client3.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ids-iot-2020/Client4.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Client4.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Server.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Server.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/aux.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ids-iot-2020/centralized.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/centralized.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ids-iot-2020/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ids-iot-2020/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,6 +47,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="22eh12m1UtSVsrkcDAhF9V05i0S" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -52,12 +58,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ids-iot-2020" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="\\wsl$\Ubuntu\home\jonathas\notebooks\ids-iot-2020" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
@@ -96,6 +107,8 @@
       <workItem from="1640220257520" duration="4531000" />
       <workItem from="1640278464914" duration="2065000" />
       <workItem from="1640463525973" duration="300000" />
+      <workItem from="1640720733465" duration="17809000" />
+      <workItem from="1640786817747" duration="17768000" />
     </task>
     <servers />
   </component>

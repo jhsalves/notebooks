@@ -3,6 +3,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import flwr as fl
 import tensorflow as tf
+from datetime import datetime
 import zipfile
 import pandas as pd
 import numpy as np
@@ -13,6 +14,7 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 import glob
 import os.path
+from tensorflow.keras.utils import to_categorical
 
 
 # Define Flower client
@@ -73,21 +75,31 @@ class FlowerClient(fl.client.NumPyClient):
 
 
 class CentralizedTrainer:
-    def __init__(self, model, training_dataset, testing_dataset, batch_size=32, epochs=1, validation_split=0.1):
+    def __init__(self, model, training_dataset, testing_dataset, batch_size=32, epochs=1, validation_split=0.1, categorical=False, instance=0):
+        self.logs = []
         self.history = None
         self.model = model
+        self.instance = instance
         self.x_train, self.y_train = training_dataset
         self.x_test, self.y_test = testing_dataset
         self.epochs = epochs
         self.validation_split = validation_split
         self.batch_size = batch_size
+        self.categorical = categorical
         self.run_model()
+        write_centralized(self.logs)
 
     def run_model(self):
-        self.model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(),
-                           metrics=tf.keras.metrics.BinaryAccuracy())
+        if self.categorical:
+            self.model.compile(optimizer='Adam', loss=tf.keras.losses.CategoricalCrossentropy(),
+                               metrics=['accuracy'])
+        else:
+            self.model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(),
+                           metrics=['binary_accuracy'])
         self.history = self.model.fit(self.x_train, self.y_train, epochs=self.epochs, batch_size=self.batch_size,
                                       validation_split=self.validation_split)
+        loss, accuracy = self.model.evaluate(self.x_test, self.y_test)
+        self.logs.append(f"instance {self.instance}: loss: {loss}, accuracy: {accuracy}")
 
 
 fl_dataset = None
@@ -97,7 +109,7 @@ def many_datasets(nrows=50000):
     fname = "normal"
     if not os.path.isfile("../datasets/" + fname + ".csv"):
         with zipfile.ZipFile("packet_features.zip", "r") as zip_ref:
-            zip_ref.extractall("../datasets/")
+            zip_ref.extractall("datasets/")
     path = r'../datasets'  # use your path
     all_files = glob.glob(path + "/*.csv")
 
@@ -120,7 +132,7 @@ def single_dataset():
     return dataset
 
 
-def dataset_preprocessing(dataset):
+def dataset_preprocessing(dataset, categorical=False):
     list_protocol = dataset.drop_duplicates(subset=['protocol'])['protocol']
     protocol = {row: idx + 1 for idx, row in enumerate(list_protocol)}
     dataset.protocol = [protocol[item] for item in dataset.protocol]
@@ -132,10 +144,14 @@ def dataset_preprocessing(dataset):
     x = scaler.fit_transform(x)
     y = dataset.iloc[:, 30].values
     x_training, x_testing, y_training, y_testing = train_test_split(x, y, test_size=0.05)
+
+    if categorical:
+        y_training, y_testing = map(to_categorical, (y_training, y_testing))
+
     return (x_training, y_training), (x_testing, y_testing), x.shape[1]
 
 
-def ids_iot_2020_datasets(rowsperdataset=None):
+def ids_iot_2020_datasets(rowsperdataset=None, categorical=False):
     global fl_dataset
 
     if fl_dataset is not None:
@@ -143,16 +159,23 @@ def ids_iot_2020_datasets(rowsperdataset=None):
 
     dataset = many_datasets() if rowsperdataset is None else many_datasets(nrows=rowsperdataset)
 
-    fl_dataset = dataset_preprocessing(dataset)
+    fl_dataset = dataset_preprocessing(dataset, categorical)
     return fl_dataset
 
 
-def build_model_with_parameters(batch_size=32, epochs=100, validation_split=0.1):
-    train, test, shape = ids_iot_2020_datasets()
+def build_model_with_parameters(batch_size=32, epochs=100, validation_split=0.1, nrows = 50000, categorical=False):
+    train, test, shape = ids_iot_2020_datasets(rowsperdataset=nrows, categorical=categorical)
 
     model = tf.keras.models.Sequential()
     model.add(tf.keras.layers.Dense(units=14, activation='relu', input_shape=(shape,)))
     model.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+
+    if categorical:
+        model = tf.keras.models.Sequential()
+        model.add(tf.keras.layers.Dense(units=500, activation='relu', input_dim=shape))
+        model.add(tf.keras.layers.Dense(100, activation='relu'))
+        model.add(tf.keras.layers.Dense(50, activation='relu'))
+        model.add(tf.keras.layers.Dense(units=2, activation='softmax'))
 
     return model, train, test, shape, batch_size, epochs, validation_split
 
@@ -175,9 +198,16 @@ def append_multiple_lines(file_name, lines_to_append):
                 file_object.write("\n")
             else:
                 append_eol = True
+
+            line_to_print = line
+
+            if line_to_print != "\n":
+                date_time = datetime.now()
+                date_time = date_time.strftime(' %d/%m/%Y %H:%M:%S.%f')[:-3]
+                line_to_print = f"{date_time} - {line_to_print}"
+
             # Append element at the end of file
-            date_time = data_e_hora_atuais.strftime(' % d / % m / % Y % H: % M')
-            file_object.write(f"{date_time} - {line}")
+            file_object.write(line_to_print)
 
 
 def write_centralized(log):
