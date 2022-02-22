@@ -2,7 +2,7 @@
 
 for i in `seq 1 20`; do
     echo "Starting client $i"
-    python3 Centralized.py --instance=${i} &
+    python3 MembershipInference.py  --sample=${i} &
 done
 
 # This will allow you to use CTRL+C to stop all background processes

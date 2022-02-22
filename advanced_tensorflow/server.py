@@ -24,7 +24,7 @@ def main() -> None:
     # Load and compile model for
     # 1. server-side parameter initialization
     # 2. server-side parameter evaluation
-    model, _, (x_test, y_test), *_ = aux.build_model_with_parameters(epochs=1)
+    model, _, (x_test, y_test), *_ = aux.build_model_with_parameters(nrows=100, categorical=True)
     model.compile(optimizer='Adam', loss=tf.keras.losses.BinaryCrossentropy(),
                   metrics=tf.keras.metrics.BinaryAccuracy())
 
@@ -42,7 +42,7 @@ def main() -> None:
     )
 
     # Start Flower server for four rounds of federated learning
-    fl.server.start_server("[::]:8080", config={"num_rounds": 9}, strategy=strategy)
+    fl.server.start_server("[::]:8080", config={"num_rounds": 10}, strategy=strategy)
 
 
 def get_eval_fn(model, x_test, y_test):
@@ -56,6 +56,7 @@ def get_eval_fn(model, x_test, y_test):
     ) -> Optional[Tuple[float, Dict[str, fl.common.Scalar]]]:
         model.set_weights(weights)  # Update model with the latest parameters
         loss, accuracy = model.evaluate(x_val, y_val)
+        model.save("federatedmodel.h5")
         aux.write_distributed([f"loss: {loss}, accuracy: {accuracy}"])
         return loss, {"accuracy": accuracy}
 
@@ -69,8 +70,8 @@ def fit_config(rnd: int):
     local epoch, increase to two local epochs afterwards.
     """
     config = {
-        "batch_size": 32,
-        "local_epochs": 10
+        "batch_size": 16,
+        "local_epochs": 30
     }
     return config
 

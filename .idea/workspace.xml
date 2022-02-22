@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db4a90fc-10bf-4fcc-9820-b263d9212a7d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/tests.sh" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/tests.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/distributed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/distributed.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/advanced_tensorflow/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_tensorflow/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aux.py" beforeDir="false" afterPath="$PROJECT_DIR$/aux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Centralized.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Centralized.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Centralized.py" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/centralized.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Client2.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Client2.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Client3.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Client3.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/Client4.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/Client4.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ids-iot-2020/MembershipInference.py" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/MembershipInference.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ids-iot-2020/centralized.py" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/centralized.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ids-iot-2020/centralized.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/centralized.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ids-iot-2020/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ids-iot-2020/teste.py" beforeDir="false" afterPath="$PROJECT_DIR$/ids-iot-2020/teste.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +53,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/ids-iot-2020" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -108,7 +103,26 @@
       <workItem from="1640278464914" duration="2065000" />
       <workItem from="1640463525973" duration="300000" />
       <workItem from="1640720733465" duration="17809000" />
-      <workItem from="1640786817747" duration="17768000" />
+      <workItem from="1640786817747" duration="22321000" />
+      <workItem from="1640881028487" duration="2412000" />
+      <workItem from="1641239102457" duration="919000" />
+      <workItem from="1641856072681" duration="703000" />
+      <workItem from="1642704065604" duration="54000" />
+      <workItem from="1643832101301" duration="6444000" />
+      <workItem from="1643908992247" duration="78000" />
+      <workItem from="1643909072948" duration="25761000" />
+      <workItem from="1644087293116" duration="11700000" />
+      <workItem from="1644279748694" duration="4509000" />
+      <workItem from="1644373763224" duration="4839000" />
+      <workItem from="1644379957781" duration="83000" />
+      <workItem from="1644380208484" duration="459000" />
+      <workItem from="1644457233838" duration="2320000" />
+      <workItem from="1644459577387" duration="3547000" />
+      <workItem from="1644523401921" duration="25000" />
+      <workItem from="1644676642967" duration="1127000" />
+      <workItem from="1644886928094" duration="6650000" />
+      <workItem from="1645102726112" duration="17613000" />
+      <workItem from="1645564060102" duration="592000" />
     </task>
     <servers />
   </component>
